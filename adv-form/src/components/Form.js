@@ -15,8 +15,24 @@ import {
 } from "reactstrap";
 
 const formSchema = yup.object().shape({
-  fname: yup.string().required("First name is required"),
-  lname: yup.string().required("Last name is required")
+  fname: yup.string("Please enter a name").required("First name is required"),
+  lname: yup.string("Please enter a name").required("Last name is required"),
+  email: yup
+    .string("Please enter an email address")
+    .email("You must enter a valid email address")
+    .required("An email address is required"),
+  password: yup
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
+      "Password needs 1 uppercase, 1 lowercase letter and 1 number"
+    )
+    .required("Please enter a password")
+    .min(8, "Password needs to be 8 characters long"),
+  confirm: yup
+    .required("Please re-type password")
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+  role: yup.string(),
+  terms: yup.boolean().oneOf([true], "Please accept the terms of use")
 });
 
 export default function MyForm() {
@@ -29,6 +45,7 @@ export default function MyForm() {
     lname: "",
     email: "",
     password: "",
+    confirm: "",
     role: "",
     terms: ""
   });
@@ -39,6 +56,7 @@ export default function MyForm() {
     lname: "",
     email: "",
     password: "",
+    confirm: "",
     role: "",
     terms: ""
   });
@@ -59,6 +77,7 @@ export default function MyForm() {
           lname: "",
           email: "",
           password: "",
+          confirm: "",
           role: "",
           terms: ""
         });
