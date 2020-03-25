@@ -14,6 +14,11 @@ import {
   Input
 } from "reactstrap";
 
+const formSchema = yup.object().shape({
+  fname: yup.string().required("First name is required"),
+  lname: yup.string().required("Last name is required")
+});
+
 export default function MyForm() {
   // state for whether button is disabled or not
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -24,7 +29,8 @@ export default function MyForm() {
     lname: "",
     email: "",
     password: "",
-    role: ""
+    role: "",
+    terms: ""
   });
 
   // state for errors
@@ -33,7 +39,8 @@ export default function MyForm() {
     lname: "",
     email: "",
     password: "",
-    role: ""
+    role: "",
+    terms: ""
   });
 
   // state to set our post request to
@@ -52,10 +59,40 @@ export default function MyForm() {
           lname: "",
           email: "",
           password: "",
-          role: ""
+          role: "",
+          terms: ""
         });
       })
       .catch(error => console.log(error.response));
   };
-  return null;
+  return (
+    <Container>
+      <Card className='mt-5 bg-success'>
+        <CardBody>
+          <h3 className='text-center'>
+            Fill Out The Form To Add A New User To The System
+          </h3>
+          <hr />
+          <Form className='pt-2'>
+            <Row form>
+              <Col md={6}>
+                <FormGroup>
+                  <Label htmlFor='firstName'>
+                    First Name
+                    <Input
+                      id='firstName'
+                      type='text'
+                      name='fname'
+                      value={formState.fname}
+                      onChange={inputChange}
+                    />
+                  </Label>
+                </FormGroup>
+              </Col>
+            </Row>
+          </Form>
+        </CardBody>
+      </Card>
+    </Container>
+  );
 }
