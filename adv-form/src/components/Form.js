@@ -38,4 +38,24 @@ export default function MyForm() {
 
   // state to set our post request to
   const [post, setPost] = useState([]);
+
+  const formSubmit = event => {
+    event.preventDefault();
+    axios
+      .post("https://reqres.in/api/users", formState)
+      .then(response => {
+        setPost(response.data);
+        console.log("success", post);
+        // reset for if success
+        setFormState({
+          fname: "",
+          lname: "",
+          email: "",
+          password: "",
+          role: ""
+        });
+      })
+      .catch(error => console.log(error.response));
+  };
+  return null;
 }
