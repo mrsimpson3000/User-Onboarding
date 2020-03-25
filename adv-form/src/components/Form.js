@@ -22,6 +22,7 @@ const formSchema = yup.object().shape({
     .email("You must enter a valid email address")
     .required("An email address is required"),
   password: yup
+    .string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
       "Password needs 1 uppercase, 1 lowercase letter and 1 number"
@@ -29,6 +30,7 @@ const formSchema = yup.object().shape({
     .required("Please enter a password")
     .min(8, "Password needs to be 8 characters long"),
   confirm: yup
+    .string()
     .required("Please re-type password")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
   role: yup.string(),
