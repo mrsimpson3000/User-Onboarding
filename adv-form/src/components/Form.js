@@ -86,6 +86,37 @@ export default function MyForm() {
       })
       .catch(error => console.log(error.response));
   };
+
+  const validateChange = event => {
+    // Reach allows us to "reach" into the schema and test only one part
+    yup
+      .reach(formSchema, event.target.name)
+      .validate(event.target.value)
+      .then(valid => {
+        setErrors({
+          ...errors,
+          [event.target.name]: ""
+        });
+      })
+      .catch(error => ({
+        ...errors,
+        [event.target.name]: error.errors[0]
+      }));
+  };
+
+  const inputChange = event => {
+    event.persist();
+    const newFormData = {
+      ...formState,
+      [event.target.name]:
+        event.target.type === "checkbox"
+          ? event.target.checked
+          : event.target.value
+    };
+    validateChange(event);
+    setFormState(newFormData);
+  };
+
   return (
     <Container>
       <Card className='mt-5 bg-success'>
@@ -94,7 +125,7 @@ export default function MyForm() {
             Fill Out The Form To Add A New User To The System
           </h3>
           <hr />
-          <Form className='pt-2'>
+          <Form onSubmit={formSubmit} className='pt-2'>
             <Row form>
               <Col md={6}>
                 <FormGroup>
