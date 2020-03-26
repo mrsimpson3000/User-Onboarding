@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import TeamCard from "./TeamCard";
 import axios from "axios";
 import * as yup from "yup";
 import {
@@ -118,8 +119,14 @@ export default function MyForm() {
     };
     validateChange(event);
     setFormState(newFormData);
+
+    const isEmpty = object => {
+      for (var key in object) {
+        if (object.hasOwnProperty(key)) return false;
+      }
+      return true;
+    };
   };
-  console.log(users);
   return (
     <Container>
       <Card className='mt-5 ml-5 mr-5 bg-success'>
@@ -132,102 +139,92 @@ export default function MyForm() {
             <Row form>
               <Col md={6}>
                 <FormGroup>
-                  <Label htmlFor='firstName'>
-                    First Name
-                    <Input
-                      className='pl-4 pr-4'
-                      id='firstName'
-                      type='text'
-                      name='fname'
-                      value={formState.fname}
-                      onChange={inputChange}
-                    />
-                    {errors.fname.length > 0 ? (
-                      <p className='text-danger'>{errors.fname}</p>
-                    ) : (
-                      <p>&nbsp;</p>
-                    )}
-                  </Label>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label htmlFor='lastName'>
-                    Last Name
-                    <Input
-                      className='pl-4 pr-4'
-                      id='lastName'
-                      type='text'
-                      name='lname'
-                      value={formState.lname}
-                      onChange={inputChange}
-                    />
-                    {errors.lname.length > 0 ? (
-                      <p className='text-danger'>{errors.lname}</p>
-                    ) : (
-                      <p>&nbsp;</p>
-                    )}
-                  </Label>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row form>
-              <Col md={6}>
-                <FormGroup>
-                  <Label htmlFor='email'>
-                    Email
-                    <Input
-                      className='pl-4 pr-4'
-                      id='email'
-                      type='email'
-                      name='email'
-                      value={formState.email}
-                      onChange={inputChange}
-                    />
-                    {errors.email.length > 0 ? (
-                      <p className='text-danger'>{errors.email}</p>
-                    ) : (
-                      <p>&nbsp;</p>
-                    )}
-                  </Label>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label htmlFor='Role'>
-                    Role
-                    <Input
-                      className='pl-5 pr-5'
-                      id='role'
-                      type='select'
-                      name='role'
-                      value={formState.role}
-                      onChange={inputChange}
-                    >
-                      <option value='Team Lead'>Team Lead</option>
-                      <option value='Designer'>Web Designer</option>
-                      <option value='Front End'>Front End Dev</option>
-                      <option value='Back End'>Back End Dev</option>
-                    </Input>
+                  <Label htmlFor='firstName' />
+                  First Name
+                  <Input
+                    id='firstName'
+                    type='text'
+                    name='fname'
+                    value={formState.fname}
+                    onChange={inputChange}
+                  />
+                  {errors.fname.length > 0 ? (
+                    <p className='text-danger'>{errors.fname}</p>
+                  ) : (
                     <p>&nbsp;</p>
-                  </Label>
+                  )}
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label htmlFor='lastName' />
+                  Last Name
+                  <Input
+                    id='lastName'
+                    type='text'
+                    name='lname'
+                    value={formState.lname}
+                    onChange={inputChange}
+                  />
+                  {errors.lname.length > 0 ? (
+                    <p className='text-danger'>{errors.lname}</p>
+                  ) : (
+                    <p>&nbsp;</p>
+                  )}
                 </FormGroup>
               </Col>
             </Row>
             <Row form>
               <Col md={6}>
                 <FormGroup>
-                  <Label htmlFor='password'>
-                    Password
-                    <Input
-                      className='pl-4 pr-4'
-                      id='password'
-                      type='password'
-                      name='password'
-                      value={formState.password}
-                      onChange={inputChange}
-                    />
-                  </Label>
+                  <Label htmlFor='email' />
+                  Email
+                  <Input
+                    id='email'
+                    type='email'
+                    name='email'
+                    value={formState.email}
+                    onChange={inputChange}
+                  />
+                  {errors.email.length > 0 ? (
+                    <p className='text-danger'>{errors.email}</p>
+                  ) : (
+                    <p>&nbsp;</p>
+                  )}
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label htmlFor='Role' />
+                  Role
+                  <Input
+                    id='role'
+                    type='select'
+                    name='role'
+                    value={formState.role}
+                    onChange={inputChange}
+                  >
+                    <option value='Team Lead'>Team Lead</option>
+                    <option value='Designer'>Web Designer</option>
+                    <option value='Front End'>Front End Dev</option>
+                    <option value='Back End'>Back End Dev</option>
+                  </Input>
+                  <p>&nbsp;</p>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row form>
+              <Col md={6}>
+                <FormGroup>
+                  <Label htmlFor='password' />
+                  Password
+                  <Input
+                    id='password'
+                    type='password'
+                    name='password'
+                    value={formState.password}
+                    onChange={inputChange}
+                  />
                   {errors.password.length > 0 ? (
                     <p className='text-danger'>{errors.password}</p>
                   ) : (
@@ -237,17 +234,15 @@ export default function MyForm() {
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label htmlFor='confirm'>
-                    Confirm Password
-                    <Input
-                      className='pl-4 pr-4'
-                      id='confirm'
-                      type='password'
-                      name='confirm'
-                      value={formState.confirm}
-                      onChange={inputChange}
-                    />
-                  </Label>
+                  <Label htmlFor='confirm' />
+                  Confirm Password
+                  <Input
+                    id='confirm'
+                    type='password'
+                    name='confirm'
+                    value={formState.confirm}
+                    onChange={inputChange}
+                  />
                   <p>&nbsp;</p>
                 </FormGroup>
               </Col>
@@ -268,13 +263,15 @@ export default function MyForm() {
                 </FormGroup>
               </Col>
             </Row>
-            <pre>{JSON.stringify(users, null, 2)}</pre>
             <Button color='primary' disabled={buttonDisabled}>
               Submit
             </Button>
           </Form>
         </CardBody>
       </Card>
+      {/* <Row>{isEmpty(users) ? "" : <TeamCard teamMember={users} />}</Row> */}
+      {/* {console.log(users)} */}
+      <pre>{JSON.stringify(users, null, 2)}</pre>
     </Container>
   );
 }
