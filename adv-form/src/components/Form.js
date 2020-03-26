@@ -77,7 +77,7 @@ export default function MyForm() {
     axios
       .post("https://reqres.in/api/users", formState)
       .then(response => {
-        setUsers(...users, response.data);
+        setUsers([...users, response.data]);
         // reset for if success
         setFormState({
           fname: "",
@@ -269,9 +269,13 @@ export default function MyForm() {
           </Form>
         </CardBody>
       </Card>
-      {/* <Row>{isEmpty(users) ? "" : <TeamCard teamMember={users} />}</Row> */}
-      {/* {console.log(users)} */}
-      <pre>{JSON.stringify(users, null, 2)}</pre>
+      <Row>
+        {users.map((teamMember, index) => {
+          return <TeamCard teamMember={teamMember} key={index} />;
+        })}
+      </Row>
+
+      {/* <pre>{JSON.stringify(users, null, 2)}</pre> */}
     </Container>
   );
 }
