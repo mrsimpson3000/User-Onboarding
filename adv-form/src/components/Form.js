@@ -142,6 +142,7 @@ export default function MyForm() {
                   <Label htmlFor='firstName' />
                   First Name
                   <Input
+                    data-cy='firstName'
                     id='firstName'
                     type='text'
                     name='fname'
@@ -160,6 +161,7 @@ export default function MyForm() {
                   <Label htmlFor='lastName' />
                   Last Name
                   <Input
+                    data-cy='lastName'
                     id='lastName'
                     type='text'
                     name='lname'
@@ -180,6 +182,7 @@ export default function MyForm() {
                   <Label htmlFor='email' />
                   Email
                   <Input
+                    data-cy='email'
                     id='email'
                     type='email'
                     name='email'
@@ -198,6 +201,7 @@ export default function MyForm() {
                   <Label htmlFor='Role' />
                   Role
                   <Input
+                    data-cy='role'
                     id='role'
                     type='select'
                     name='role'
@@ -219,6 +223,7 @@ export default function MyForm() {
                   <Label htmlFor='password' />
                   Password
                   <Input
+                    data-cy='password'
                     id='password'
                     type='password'
                     name='password'
@@ -226,7 +231,9 @@ export default function MyForm() {
                     onChange={inputChange}
                   />
                   {errors.password.length > 0 ? (
-                    <p className='text-danger'>{errors.password}</p>
+                    <p data-cy='passError' className='text-danger'>
+                      {errors.password}
+                    </p>
                   ) : (
                     <p>&nbsp;</p>
                   )}
@@ -237,6 +244,7 @@ export default function MyForm() {
                   <Label htmlFor='confirm' />
                   Confirm Password
                   <Input
+                    data-cy='confirm'
                     id='confirm'
                     type='password'
                     name='confirm'
@@ -253,6 +261,7 @@ export default function MyForm() {
                   <Label htmlFor='terms' className='flexMe'>
                     Terms & Conditions
                     <Input
+                      data-cy='terms'
                       id='terms'
                       type='checkbox'
                       name='terms'
@@ -263,7 +272,7 @@ export default function MyForm() {
                 </FormGroup>
               </Col>
             </Row>
-            <Button color='primary' disabled={buttonDisabled}>
+            <Button data-cy='submit' color='primary' disabled={buttonDisabled}>
               Submit
             </Button>
           </Form>
